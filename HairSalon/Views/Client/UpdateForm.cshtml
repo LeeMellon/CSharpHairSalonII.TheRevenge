@@ -1,0 +1,18 @@
+<h1>Update Client Information</h1>
+<h2>Edit Client: @Model["client"].GetFirstName()  @Model["client"].GetLastName()</h2>
+<form action='/client/@Model["client"]GetId()/update' method="post">
+    <label for="First name">Name:</label>
+    <input type="text" name="firstname" value='@Model["client"].GetFirstName()'>
+    <input type="text" name="lastname" value='@Model["client"].GetLastName()'>
+    <input type="number" name="number" value='@Model["client"].GetNumber()'>
+    <input type="text" name="email" value='@Model["client"].GetEmail()'>
+    <input type="hidden" name="id" value='@Model["client"].GetId()'>
+    <select name="stylist_id">
+    @foreach(var stylist in @Model["stylist"])
+    {
+      <option value='@stylist.GetId()'>@stylist.GetStylistName()</option>
+    }
+  </select>
+    <button type="submit">Edit</button>
+</form>
+<h4><a href="/">Return home</a></h4>

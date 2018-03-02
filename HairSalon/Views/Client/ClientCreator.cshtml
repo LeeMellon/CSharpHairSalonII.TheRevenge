@@ -1,0 +1,10 @@
+<h1>Create New Client For @Model.GetStylistName()</h1>
+<form action="/client/new" method="post">
+  <label for="new-client">Client Acct Setup</label>
+  <input id="new-client-first" name="new-client-first" type="text" placeholder="First Name">
+  <input id="new-client-last" name="new-client-last" type="text" placeholder="Last Name">
+  <input id="new-client-number" name="new-client-number" type="number" placeholder="Phone #">
+  <input id="new-client-eamil" name="new-client-email" type="test" placeholder="Email">
+  <input type="hidden" name="stylist_id" value="@Model.GetId()">
+  <button type="submit">Submit</button>
+</form>

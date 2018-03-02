@@ -1,0 +1,11 @@
+
+<h1>Hair Salon</h1>
+<h2>Stylists</h2>
+@foreach(var stylist in Model)
+{
+  <h4><a href="/stylist/@stylist.GetId()">@stylist.GetStylistName()</a></h4>
+
+}
+<form class="" action="/stylist/new" method="get">
+  <button type="submit" name="button">Add New Stylist</button>
+</form>
