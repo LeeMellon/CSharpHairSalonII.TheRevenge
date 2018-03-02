@@ -12,6 +12,7 @@ namespace HairSalon.Tests
     public void Dispose()
     {
       Stylist.DeleteAllStylists();
+      Client.DeleteAllClients();
     }
 
     public StylistTests()
@@ -47,8 +48,8 @@ namespace HairSalon.Tests
       newStylist1.Save();
       newStylist2.Save();
       List<Stylist> testList = Stylist.GetAllStylists();
-      System.Console.WriteLine(stylistList[1].GetId());
-      System.Console.WriteLine(testList[1].GetId());
+      // System.Console.WriteLine(stylistList[1].GetId());
+      // System.Console.WriteLine(testList[1].GetId());
 
       //assert
       CollectionAssert.AreEqual(testList, stylistList);
@@ -134,16 +135,21 @@ namespace HairSalon.Tests
     //arrange
     Stylist newStylist2 = new Stylist("Berly", 2);
     newStylist2.Save();
+
     int stylistId = newStylist2.GetId();
     int otherId = stylistId + 1;
-    Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", stylistId);
-    Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org", otherId);
-    Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org", stylistId);
+    Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org");
+    Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org");
+    Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org");
     newClient1.Save();
     newClient2.Save();
     newClient3.Save();
+    newClient1.AddStylist(stylistId);
+    newClient2.AddStylist(otherId);
+    newClient3.AddStylist(stylistId);
+
     //action
-    List<Client> clientList = Client.GetClientsByStylistId(stylistId);
+    List<Client> clientList = Client.GetClientsByStylist(stylistId);
     int clientListCount = clientList.Count;
 
     //assert

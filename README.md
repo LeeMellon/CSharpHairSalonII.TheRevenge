@@ -62,6 +62,7 @@ git clone https://github.com/LeeMellon/CSharpHairSalon.git
   > USE hair_salon;
   > CREATE TABLE clients (id serial PRIMARY KEY, name_first VARCHAR(255), name_last VARCHAR(255), number INT, email VARCHAR(255));
   > CREATE TABLE stylists (id serial PRIMARY KEY, name VARCHAR(255), chair INT);
+  > CREATE TABLE `ian_goodrich`.`specialties` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(125) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
   > CREATE TABLE `ian_goodrich`.`specialties_stylists` ( `id` INT NOT NULL AUTO_INCREMENT , `specialty_id` INT NOT NULL , `stylist_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
   > CREATE TABLE `ian_goodrich`.`specialties_stylists` ( `id` INT NOT NULL AUTO_INCREMENT , `specialty_id` INT NOT NULL , `stylist_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 

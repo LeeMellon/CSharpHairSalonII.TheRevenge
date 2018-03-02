@@ -45,7 +45,7 @@ namespace HairSalon.Controllers
       public ActionResult StylistDetails(int id)
       {
         Stylist thisStylist = Stylist.Find(id);
-        List<Client> stylistClients = Client.GetClientsByStylistId(id);
+        List<Client> stylistClients = Client.GetClientsByStylist(id);
         Dictionary<string, object> StylistClientDict = new Dictionary <string, object>();
         StylistClientDict.Add("stylistName", thisStylist);
         StylistClientDict.Add("stylistClients", stylistClients);

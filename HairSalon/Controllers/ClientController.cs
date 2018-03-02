@@ -46,7 +46,7 @@ namespace HairSalon.Controllers
       public ActionResult Update(int id)
       {
         Client thisClient = Client.Find(id);
-        thisClient.EditClient(Request.Form["firstName"], Request.Form["lastName"], Convert.ToInt64(Request.Form["number"]), Request.Form["email"], Convert.ToInt32(Request.Form["stylist_id"]));
+        thisClient.EditClient(Request.Form["firstName"], Request.Form["lastName"], Convert.ToInt64(Request.Form["number"]), Request.Form["email"]);
         return RedirectToAction("index", "stylist");
       }
 

@@ -14,10 +14,11 @@ namespace HairSalon.Tests
 
       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=ian_goodrich_test;";
     }
-    
+
     public void Dispose()
     {
       Client.DeleteAllClients();
+      Stylist.DeleteAllStylists();
     }
 
 
@@ -25,21 +26,19 @@ namespace HairSalon.Tests
     public void GetsAndSets_AllGettersAndSetters_Values()
     {
       //arrange
-      Client newClient = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1, 3);
+      Client newClient = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org",1);
       //action
       string clientFirstName = newClient.GetFirstName();
       string clientLastName = newClient.GetLastName();
       long clientNumber = newClient.GetNumber();
       string clientEmail = newClient.GetEmail();
-      int clientStylistId = newClient.GetStylistId();
       int clientId = newClient.GetId();
       //assert
       Assert.AreEqual(clientFirstName, "Franz");
       Assert.AreEqual(clientLastName, "Franzia");
       Assert.AreEqual(clientNumber, 5031112222);
       Assert.AreEqual(clientEmail, "franz@franzia.org");
-      Assert.AreEqual(clientStylistId, 1);
-      Assert.AreEqual(clientId, 3);
+      Assert.AreEqual(clientId, 1);
     }
 
     [TestMethod]
@@ -47,8 +46,8 @@ namespace HairSalon.Tests
     {
       //arrange
       List<Client> clientList = new List<Client>{};
-      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1, 3);
-      Client newClient2 = new Client("Hanz", "Hanzia", 5032223333, "hanz@hanzia.org", 2, 2);
+      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org");
+      Client newClient2 = new Client("Hanz", "Hanzia", 5032223333, "hanz@hanzia.org");
       clientList.Add(newClient1);
       clientList.Add(newClient2);
       //action
@@ -63,8 +62,8 @@ namespace HairSalon.Tests
     public void DeleteClient_ReturnClientListCount_Int()
     {
       //arrange
-      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1, 3);
-      Client newClient2 = new Client("Hanz", "Hanzia", 5032223333, "hanz@hanzia.org", 2, 2);
+      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org");
+      Client newClient2 = new Client("Hanz", "Hanzia", 5032223333, "hanz@hanzia.org");
       newClient1.Save();
       newClient2.Save();
       List<Client> clientList = Client.GetAllClients();
@@ -85,13 +84,13 @@ namespace HairSalon.Tests
     public void EditClients_ReturnNewClientNameAndNumber_Values()
     {
       //arrange
-      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1);
+      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org");
       newClient1.Save();
       //action
-      newClient1.EditClient("Hanz", "Franzia", 5034445555, "franz@franzia.org", 1);
-      string newName = newClient1.GetFirstName();
-      long newNumber = newClient1.GetNumber();
-      // System.Console.WriteLine(testListCount);
+      newClient1.EditClient("Hanz", "Franzia", 5034445555, "franz@franzia.org");
+      List<Client> clientsList = Client.GetAllClients();
+      string newName = clientsList[0].GetFirstName();
+      long newNumber = clientsList[0].GetNumber();
 
       //assert
       Assert.AreEqual(newName, "Hanz");
@@ -102,16 +101,17 @@ namespace HairSalon.Tests
     public void FindClients_ReturnClientName_String()
     {
       //arrange
-      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1);
-      Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org", 1);
-      Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org", 1);
+      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org");
+      Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org");
+      Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org");
       newClient1.Save();
       newClient2.Save();
       newClient3.Save();
+      List<Client> clientsList = Client.GetAllClients();
+
       //action
-      int clientId = newClient2.GetId();
+      int clientId = clientsList[1].GetId();
       Client testClient = Client.Find(clientId);
-      System.Console.WriteLine("Test" + newClient2.GetId());
       string testClientName = testClient.GetFirstName();
 
       //assert
@@ -122,9 +122,9 @@ namespace HairSalon.Tests
     public void DeleteAllClients_ReturnEmptyList_List()
     {
       //arrange
-      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1);
-      Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org", 1);
-      Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org", 1);
+      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org");
+      Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org");
+      Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org");
       newClient1.Save();
       newClient2.Save();
       newClient3.Save();
