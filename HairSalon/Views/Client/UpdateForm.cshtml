@@ -1,3 +1,6 @@
+@{
+  Layout = "_Layout";
+}
 <h1>Update Client Information</h1>
 <h2>Edit Client: @Model["client"].GetFirstName()  @Model["client"].GetLastName()</h2>
 <form action='/client/@Model["client"]GetId()/update' method="post">

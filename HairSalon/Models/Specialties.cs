@@ -5,7 +5,7 @@ using System;
 using HairSalon;
 
 
-namespace Specialties.Models
+namespace HairSalon.Models
 {
     public class Specialty
     {
@@ -21,15 +21,15 @@ namespace Specialties.Models
 
       public override bool Equals(System.Object otherSpecialty)
       {
-        if (!(otherSpecialtyis Specialty)
+        if (!(otherSpecialty is Specialty))
         {
           return false;
         }
         else
         {
-          SpecialtynewSpecialty= (Specialty otherSpecialty
-          bool idEquality = (this.GetId() == newSpecialtyGetId());
-          bool nameEquality = (this.GetName() == newSpecialtyGetName());
+          Specialty newSpecialty = (Specialty) otherSpecialty;
+          bool idEquality = (this.GetId() == newSpecialty.GetId());
+          bool nameEquality = (this.GetName() == newSpecialty.GetName());
           return (idEquality && nameEquality);
         }
       }
@@ -218,14 +218,11 @@ namespace Specialties.Models
 
          MySqlParameter name = new MySqlParameter();
          name.ParameterName = "@ame";
-         name.Value = name;
+         name.Value = newName;
          cmd.Parameters.Add(name);
 
          cmd.ExecuteNonQuery();
-         _nameFirst = newFirstName;
-         _nameLast = newLastName;
-         _number = newNumber;
-         _email = newEmail;
+         _name = newName;
 
          conn.Close();
          if (conn != null)
@@ -254,7 +251,7 @@ namespace Specialties.Models
            int specialtyId = rdr.GetInt32(0);
            string specialtyName = rdr.GetString(1);
            Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
-           specialtiesByStylist.Add(newClient);
+           specialtiesByStylist.Add(newSpecialty);
          }
          conn.Close();
          if (conn != null)
