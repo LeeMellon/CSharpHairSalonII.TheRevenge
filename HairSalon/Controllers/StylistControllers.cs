@@ -46,9 +46,11 @@ namespace HairSalon.Controllers
       {
         Stylist thisStylist = Stylist.Find(id);
         List<Client> stylistClients = Client.GetClientsByStylist(id);
+        List<Specialty> stylistSpecialties = thisStylist.GetSpecialtiesByStylist();
         Dictionary<string, object> StylistClientDict = new Dictionary <string, object>();
-        StylistClientDict.Add("stylistName", thisStylist);
+        StylistClientDict.Add("stylist", thisStylist);
         StylistClientDict.Add("stylistClients", stylistClients);
+        StylistClientDict.Add("specialty", stylistSpecialties);
         return View(StylistClientDict);
       }
 
@@ -61,6 +63,40 @@ namespace HairSalon.Controllers
         List<Stylist> allStylists = Stylist.GetAllStylists();
         return View ("Index", allStylists);
       }
+
+      //STYLIST UPDATE FORM
+      [HttpGet("/stylist/{id}/update")]
+      public ActionResult UpdateForm(int id)
+      {
+        Stylist thisStylist = Stylist.Find(id);
+        List<Specialty> allSpecialties = Specialty.GetAllSpecialties();
+        Dictionary<string, object> stylistSpecialtyDict = new Dictionary<string, object>();
+        stylistSpecialtyDict.Add("specialty", allSpecialties);
+        stylistSpecialtyDict.Add("stylist", thisStylist);
+        return View(stylistSpecialtyDict);
+      }
+
+      //SAVES STYLIST UPDATE INFO TO DB. REDIRECTS TO INDEX
+      [HttpPost("/stylist/{id}/update")]
+      public ActionResult Update(int id)
+      {
+        Stylist thisStylist = Stylist.Find(id);
+        thisStylist.EditStylist(Request.Form["name"],
+        Convert.ToInt32(Request.Form["chair"]));
+        thisStylist.AddSpecialty(Convert.ToInt32(Request.Form["specialty_id"]));
+        return RedirectToAction("index", "stylist");
+      }
+
+      [HttpPost("/stylist/{id}/specialty/{specId}/delete")]
+      public ActionResult RemoveSpecialty(int id, int specId)
+      {
+        Stylist thisStylist = Stylist.Find(id);
+        int thisId = thisStylist.GetId();
+        thisStylist.RemoveSpecialty(specId);
+        return RedirectToAction("StylistDetails", new { id = thisId});
+      }
+
+
 
     }
 }

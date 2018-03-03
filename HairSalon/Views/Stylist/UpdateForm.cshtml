@@ -1,0 +1,33 @@
+@{
+  Layout = "_Layout";
+}
+<h1>Update Stylist Information</h1>
+<h2>Edit Stylist: @Model["stylist"].GetStylistName()</h2>
+<form action='/stylist/@Model["stylist"]GetId()/update' method="post">
+    <label for="First name">Name:</label>
+    <input type="text" name="name" value='@Model["stylist"].GetStylistName()'>
+    <select name="chair">
+      <option value="" disabled selected>Select Chair</option>
+      <option value='1'>Chair 1</option>
+      <option value='2'>Chair 2</option>
+      <option value='3'>Chair 3</option>
+      <option value='4'>Chair 4</option>
+      <option value='5'>Chair 5</option>
+      <option value='6'>Chair 6</option>
+      <option value='7'>Chair 7</option>
+    </select>
+    <input type="hidden" name="id" value='@Model["stylist"].GetId()'>
+    @if (@Model["specialty"].Count != 0)
+    {
+    <label for="Add Speciality"></label>
+
+    <select name="specialty_id">
+    @foreach(var specialty in @Model["specialty"])
+    {
+      <option value='@specialty.GetId()'>@specialty.GetName()</option>
+    }
+    </select>
+    }
+    <button type="submit">Edit</button>
+</form>
+<h4><a href="/">Return home</a></h4>

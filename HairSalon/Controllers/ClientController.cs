@@ -24,8 +24,9 @@ namespace HairSalon.Controllers
         string lastName = Request.Form["new-client-last"];
         long number = Convert.ToInt64(Request.Form["new-client-number"]);
         string email = Request.Form["new-client-email"];
-        Client newClient = new Client (firstName, lastName, number, email, stylistId);
+        Client newClient = new Client (firstName, lastName, number, email);
         newClient.Save();
+        newClient.AddStylist(stylistId);
         return RedirectToAction("Index","stylist");
       }
 
@@ -72,12 +73,11 @@ namespace HairSalon.Controllers
       }
 
       //DELETS ONE CLIENT FROM STYLIST DETAILS PAGE
-      [HttpGet("/client/{id}/delete")]
+      [HttpPost("/client/{id}/delete")]
       public ActionResult Delete(int id)
       {
         Client thisClient = Client.Find(id);
         int thisId = thisClient.GetStylistId();
-        System.Console.WriteLine(thisId);
         thisClient.DeleteClient();
         return RedirectToAction("StylistDetails", "stylist", new {Id = thisId});
       }

@@ -97,7 +97,7 @@ namespace HairSalon.Models
         return _id;
       }
 
-
+      //DELETS ALL CLIENTS
       public static void DeleteAllClients()
       {
         MySqlConnection conn = DB.Connection();
@@ -161,6 +161,7 @@ namespace HairSalon.Models
         return allClients;
       }
 
+      //RETURNS STYLIST ID FROM JOIN TABLE
       public int GetStylistId()
       {
         MySqlConnection conn = DB.Connection();

@@ -59,7 +59,7 @@ namespace HairSalon.Models
         return _id;
       }
 
-
+      //DELETS ALL SPECIALTIES
       public static void DeleteAllSpecialties()
       {
         MySqlConnection conn = DB.Connection();
@@ -74,7 +74,7 @@ namespace HairSalon.Models
         }
       }
 
-      //DELETE ALL CLIENTS BY STYLIST
+      //DELETE ALL SPECIALTIES BY STYLIST
       public static void DeleteAllSpecialtiesByStylist(int id)
       {
         MySqlConnection conn = DB.Connection();
@@ -96,7 +96,7 @@ namespace HairSalon.Models
         }
       }
 
-      //GETS ALL CLIENTS
+      //GETS ALL SPECIALTIES
       public static List<Specialty> GetAllSpecialties()
       {
         List<Specialty> allSpecialties = new List<Specialty>{};
@@ -121,7 +121,7 @@ namespace HairSalon.Models
         return allSpecialties;
       }
 
-      //SAVE CLIENT
+      //SAVE SPECIALTY
       public void Save()
         {
           MySqlConnection conn = DB.Connection();
@@ -146,7 +146,7 @@ namespace HairSalon.Models
 
         }
 
-        //DELETE CLIENT
+        //DELETE SPECIALTY
         public void DeleteSpecialty()
         {
          MySqlConnection conn = DB.Connection();
@@ -170,7 +170,7 @@ namespace HairSalon.Models
          }
         }
 
-        //FIND CLIENT BY ID
+        //FIND SPECIALTY BY ID
         public static Specialty Find(int id)
         {
           MySqlConnection conn = DB.Connection();
@@ -203,7 +203,7 @@ namespace HairSalon.Models
           return newSpecialty;
         }
 
-        //EDITS CLIENT DETAILS
+        //EDITS SPECIALTY DETAILS
         public void EditSpeciality(string newName)
         {
          MySqlConnection conn = DB.Connection();
@@ -231,35 +231,6 @@ namespace HairSalon.Models
          }
        }
 
-       //RETURNS LIST OF CLIENTS BY STYLIST ID
-       public static List<Specialty> GetSpecialtiesByStylist(int id)
-       {
-         List<Specialty> specialtiesByStylist = new List<Specialty>{};
-         MySqlConnection conn = DB.Connection();
-         conn.Open();
-         var cmd = conn.CreateCommand() as MySqlCommand;
-         cmd.CommandText = @"SELECT specialties.* FROM specialties_stylists JOIN stylists ON (specialties_stylists.stylist_id = stylists.id) JOIN specialties ON (specialties.id = specialties_stylists.specialty_id) WHERE stylists.id = @searchId;";
-
-         MySqlParameter searchId = new MySqlParameter();
-         searchId.ParameterName = "@searchId";
-         searchId.Value = id;
-         cmd.Parameters.Add(searchId);
-         var rdr = cmd.ExecuteReader() as MySqlDataReader;
-
-         while(rdr.Read())
-         {
-           int specialtyId = rdr.GetInt32(0);
-           string specialtyName = rdr.GetString(1);
-           Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
-           specialtiesByStylist.Add(newSpecialty);
-         }
-         conn.Close();
-         if (conn != null)
-         {
-             conn.Dispose();
-         }
-         return specialtiesByStylist;
-         }
 
        public void AddStylist(int styId)
        {
@@ -273,7 +244,6 @@ namespace HairSalon.Models
          specialtyId.ParameterName = "@specialtyId";
          specialtyId.Value = this._id;
          cmd.Parameters.Add(specialtyId);
-
 
          MySqlParameter stylistId = new MySqlParameter();
          stylistId.ParameterName = "@stylistId";

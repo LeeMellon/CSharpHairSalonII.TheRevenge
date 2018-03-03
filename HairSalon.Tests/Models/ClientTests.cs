@@ -27,12 +27,14 @@ namespace HairSalon.Tests
     {
       //arrange
       Client newClient = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org",1);
+
       //action
       string clientFirstName = newClient.GetFirstName();
       string clientLastName = newClient.GetLastName();
       long clientNumber = newClient.GetNumber();
       string clientEmail = newClient.GetEmail();
       int clientId = newClient.GetId();
+
       //assert
       Assert.AreEqual(clientFirstName, "Franz");
       Assert.AreEqual(clientLastName, "Franzia");
@@ -50,10 +52,12 @@ namespace HairSalon.Tests
       Client newClient2 = new Client("Hanz", "Hanzia", 5032223333, "hanz@hanzia.org");
       clientList.Add(newClient1);
       clientList.Add(newClient2);
+
       //action
       newClient1.Save();
       newClient2.Save();
       List<Client> testList = Client.GetAllClients();
+
       //assert
       CollectionAssert.AreEqual(testList, clientList);
     }
@@ -68,6 +72,7 @@ namespace HairSalon.Tests
       newClient2.Save();
       List<Client> clientList = Client.GetAllClients();
       int clientListCount = clientList.Count;
+
       //action
       int deleteId = clientList[1].GetId();
       Client thisClient = Client.Find(deleteId);
@@ -86,6 +91,7 @@ namespace HairSalon.Tests
       //arrange
       Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org");
       newClient1.Save();
+
       //action
       newClient1.EditClient("Hanz", "Franzia", 5034445555, "franz@franzia.org");
       List<Client> clientsList = Client.GetAllClients();
@@ -128,6 +134,7 @@ namespace HairSalon.Tests
       newClient1.Save();
       newClient2.Save();
       newClient3.Save();
+
       //action
       Client.DeleteAllClients();
       List<Client> clientList = Client.GetAllClients();

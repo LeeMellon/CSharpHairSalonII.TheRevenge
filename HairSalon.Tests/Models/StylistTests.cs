@@ -25,10 +25,12 @@ namespace HairSalon.Tests
     {
       //arrange
       Stylist newStylist = new Stylist("Kimberly", 3, 1);
+
       //action
       string stylistName = newStylist.GetStylistName();
       int stylistChair = newStylist.GetStylistChair();
       int stylistId = newStylist.GetId();
+
       //assert
       Assert.AreEqual(stylistName, "Kimberly");
       Assert.AreEqual(stylistChair, 3);
@@ -44,12 +46,11 @@ namespace HairSalon.Tests
       Stylist newStylist2 = new Stylist("Berly", 2);
       stylistList.Add(newStylist1);
       stylistList.Add(newStylist2);
+
       //action
       newStylist1.Save();
       newStylist2.Save();
       List<Stylist> testList = Stylist.GetAllStylists();
-      // System.Console.WriteLine(stylistList[1].GetId());
-      // System.Console.WriteLine(testList[1].GetId());
 
       //assert
       CollectionAssert.AreEqual(testList, stylistList);
@@ -65,6 +66,7 @@ namespace HairSalon.Tests
     newStylist2.Save();
     List<Stylist> stylistList = Stylist.GetAllStylists();
     int stylistListCount = stylistList.Count;
+
     //action
     int deleteId = stylistList[1].GetId();
     Stylist.DeleteStylist(deleteId);
@@ -102,6 +104,7 @@ namespace HairSalon.Tests
     newStylist1.Save();
     newStylist2.Save();
     newStylist3.Save();
+
     //action
     int stylistId = newStylist2.GetId();
     Stylist testStylist = Stylist.Find(stylistId);
@@ -129,6 +132,7 @@ namespace HairSalon.Tests
     //assert
     Assert.AreEqual(stylistListCount, 0);
   }
+
   [TestMethod]
   public void GetClientsByStylistId_ReturnList_List()
   {
@@ -154,6 +158,44 @@ namespace HairSalon.Tests
 
     //assert
     Assert.AreEqual(clientListCount, 2);
+  }
+
+  [TestMethod]
+  public void AddSpecialty_AddSpecialtyToStylist_Value()
+  {
+    //arrange
+    Stylist newStylist = new Stylist("XXXXXXXXX", 2);
+    newStylist.Save();
+    Specialty newSpecialty = new Specialty ("shavingXXX");
+    newSpecialty.Save();
+    int specId = newSpecialty.GetId();
+    Console.WriteLine(newSpecialty.GetName() + newSpecialty.GetId());
+    newStylist.AddSpecialty(specId);
+
+    //action
+    List<Specialty> specsList = newStylist.GetSpecialtiesByStylist();
+    Console.WriteLine(specsList.Count);
+
+    //assert
+    Assert.AreEqual(specsList[0].GetName(), "shaving");
+  }
+
+  [TestMethod]
+  public void RemoveSpecialty_RemoveSpecialtyFromStylist_Int()
+  {
+    //arrange
+    Stylist newStylist2 = new Stylist("Berly", 2);
+    newStylist2.Save();
+    Specialty newSpecialty = new Specialty ("shaving");
+    newSpecialty.Save();
+    newStylist2.AddSpecialty(newSpecialty.GetId());
+
+    //action
+    newStylist2.RemoveSpecialty(newSpecialty.GetId());
+    List<Specialty> specsList2 = newStylist2.GetSpecialtiesByStylist();
+
+    //assert
+    Assert.AreEqual(specsList2.Count, 0);
   }
 
  }

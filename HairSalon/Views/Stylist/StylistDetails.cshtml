@@ -1,19 +1,45 @@
 @{
   Layout = "_Layout";
 }
-
-<h1>@Model["stylistName"].GetStylistName()</h1>
-
+<h1>@Model["stylist"].GetStylistName()</h1>
+<h3> @Model["stylist"].GetStylistName() Works at Chair # @Model["stylist"].GetStylistChair()</h3>
+    @if (@Model["specialty"].Count != 0)
+{
+<h3> @Model["stylist"].GetStylistName() Is proficent in:</h3>
+<ul>
+  @foreach(var specialty in @Model["specialty"])
+  {
+    <li>@specialty.GetName()|<a href="/stylist/@Model["stylist"].GetId()/speciality/@specialty.GetId()/delete">Remove this Proficency</a></li>
+  }
+</ul>
+}
+<h3> @Model["stylist"].GetStylistName() Current Client List is:</h3>
 <ul>
   @foreach(var client in @Model["stylistClients"])
   {
   <li>First Name: @client.GetFirstName()  Last Name: @client.GetLastName() | <a href="/client/@client.GetId()/update">Edit Client</a> | <a href="/client/@client.GetId()/details">View Client Data</a> |<a href="/client/@client.GetId()/delete">Delete Client Record</a></li>
   }
 </ul>
-<p><a href='/stylist/@Model["stylistName"].GetId()/client/new'>Add Another Client.</a></p>
-<form action='/client/@Model["stylistName"].GetId()/delete_all' method="post">
+
+<div class="details-bttns">
+<div class="">
+  <form action='/stylist/@Model["stylist"].GetId()/client/new' method="get">
+    <button type="submit" name="button">Add Another Client</button>
+  </form>
+</div>
+<div>
+<form action='/stylist/@Model["stylist"].GetId()/update' method="get">
+  <button type="submit" name="button">Update This Stylist</button>
+</form>
+</div>
+<div>
+<form action='/client/@Model["stylist"].GetId()/delete_all' method="post">
   <button type="submit" name="button">Delete All Clients</button>
 </form>
-<form action='/stylist/@Model["stylistName"].GetId()/delete_stylist' method="get">
+</div>
+<div>
+<form action='/stylist/@Model["stylist"].GetId()/delete_stylist' method="get">
   <button type="submit" name="button">Delete This Stylist</button>
 </form>
+</div>
+</div>
