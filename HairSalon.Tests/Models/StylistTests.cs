@@ -164,17 +164,19 @@ namespace HairSalon.Tests
   public void AddSpecialty_AddSpecialtyToStylist_Value()
   {
     //arrange
-    Stylist newStylist = new Stylist("XXXXXXXXX", 2);
+    Stylist newStylist = new Stylist("Berly", 2);
     newStylist.Save();
-    Specialty newSpecialty = new Specialty ("shavingXXX");
+    Specialty newSpecialty = new Specialty ("shaving");
     newSpecialty.Save();
     int specId = newSpecialty.GetId();
     Console.WriteLine(newSpecialty.GetName() + newSpecialty.GetId());
+    Console.WriteLine("newStylist.GetId " + newStylist.GetId());
     newStylist.AddSpecialty(specId);
+    Console.WriteLine("newStylist.GetId 2 " + newStylist.GetId());
+
 
     //action
     List<Specialty> specsList = newStylist.GetSpecialtiesByStylist();
-    Console.WriteLine(specsList.Count);
 
     //assert
     Assert.AreEqual(specsList[0].GetName(), "shaving");

@@ -234,32 +234,36 @@ namespace HairSalon.Models
       //ADDS SPECIALTY TO STYLIST BY SPECIALTY ID
       public void AddSpecialty(int specId)
       {
+
+        Console.WriteLine("Add Spec Top:" + this._id);
         MySqlConnection conn = DB.Connection();
         conn.Open();
 
         var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"INSERT INTO specialties_stylists (stylist_id, specialty_id) VALUES (@stylistId, @specialtyId);";
+        cmd.CommandText = @"INSERT INTO specialties_stylists (specialty_id, stylist_id) VALUES (@specialtyId, @stylistId);";
 
         MySqlParameter stylistId = new MySqlParameter();
         stylistId.ParameterName = "@stylistId";
         stylistId.Value = this._id;
         cmd.Parameters.Add(stylistId);
 
-
         MySqlParameter specialtyId = new MySqlParameter();
         specialtyId.ParameterName = "@specialtyId";
         specialtyId.Value = specId;
         cmd.Parameters.Add(specialtyId);
+        Console.WriteLine("Add Spec Mid:" + this._id);
 
         cmd.ExecuteNonQuery();
 
-       _id = (int) cmd.LastInsertedId;
+       // _id = (int) cmd.LastInsertedId;
 
         conn.Close();
         if (conn != null)
         {
             conn.Dispose();
         }
+        Console.WriteLine("Add Spec End:" + this._id);
+
       }
       //REMOVES SPECIALTY-TO-STYLIST DATA FROM JOIN TABLE
       public void RemoveSpecialty(int specId)
@@ -295,6 +299,9 @@ namespace HairSalon.Models
       //RETURNS LIST OF SPECIALTIES BY STYLIST ID
       public List<Specialty> GetSpecialtiesByStylist()
       {
+        System.Console.WriteLine("this ID " + this._id);
+
+        List<Specialty> specialtiesByStylist = new List<Specialty>{};
         MySqlConnection conn = DB.Connection();
         conn.Open();
         MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
@@ -304,10 +311,9 @@ namespace HairSalon.Models
         searchId.ParameterName = "@searchId";
         searchId.Value = this._id;
         cmd.Parameters.Add(searchId);
-        System.Console.WriteLine("Stylist ID " + this._id);
+        System.Console.WriteLine("Stylist Name " + this._name);
 
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-        List<Specialty> specialtiesByStylist = new List<Specialty>{};
         Console.WriteLine("TOP" + specialtiesByStylist.Count);
         while(rdr.Read())
         {
@@ -327,6 +333,5 @@ namespace HairSalon.Models
 
         return specialtiesByStylist;
         }
-
   }
 }
