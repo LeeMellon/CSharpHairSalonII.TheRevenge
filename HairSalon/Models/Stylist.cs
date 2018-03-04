@@ -235,7 +235,6 @@ namespace HairSalon.Models
       public void AddSpecialty(int specId)
       {
 
-        Console.WriteLine("Add Spec Top:" + this._id);
         MySqlConnection conn = DB.Connection();
         conn.Open();
 
@@ -251,18 +250,16 @@ namespace HairSalon.Models
         specialtyId.ParameterName = "@specialtyId";
         specialtyId.Value = specId;
         cmd.Parameters.Add(specialtyId);
-        Console.WriteLine("Add Spec Mid:" + this._id);
 
         cmd.ExecuteNonQuery();
 
-       // _id = (int) cmd.LastInsertedId;
+       // _id = (int) cmd.LastInsertedId; THIS LINE DOES NOT BELONG!! REMEMBER IT.
 
         conn.Close();
         if (conn != null)
         {
             conn.Dispose();
         }
-        Console.WriteLine("Add Spec End:" + this._id);
 
       }
       //REMOVES SPECIALTY-TO-STYLIST DATA FROM JOIN TABLE
@@ -272,8 +269,10 @@ namespace HairSalon.Models
         conn.Open();
 
         var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"DELETE FROM  specialties_stylists WHERE specialties_stylists.stylist_id = @stylistId && specialties_stylists.specialty_id = @specialtyId;";
-        // cmd.CommandText =  @"DELETE specialties.* FROM specialties_stylists JOIN stylists ON (specialties_stylists.stylist_id = stylists.id) JOIN specialties ON (specialties.id = specialties_stylists.specialty_id) WHERE stylists.id = @searchId;";
+
+
+        cmd.CommandText = @"DELETE FROM specialties_stylists WHERE specialties_stylists.stylist_id = @stylistId && specialties_stylists.specialty_id = @specialtyId;";
+
         MySqlParameter stylistId = new MySqlParameter();
         stylistId.ParameterName = "@stylistId";
         stylistId.Value = this._id;
@@ -287,19 +286,17 @@ namespace HairSalon.Models
 
         cmd.ExecuteNonQuery();
 
-       _id = (int) cmd.LastInsertedId;
-
         conn.Close();
         if (conn != null)
         {
             conn.Dispose();
         }
+
       }
 
       //RETURNS LIST OF SPECIALTIES BY STYLIST ID
       public List<Specialty> GetSpecialtiesByStylist()
       {
-        System.Console.WriteLine("this ID " + this._id);
 
         List<Specialty> specialtiesByStylist = new List<Specialty>{};
         MySqlConnection conn = DB.Connection();
@@ -311,10 +308,8 @@ namespace HairSalon.Models
         searchId.ParameterName = "@searchId";
         searchId.Value = this._id;
         cmd.Parameters.Add(searchId);
-        System.Console.WriteLine("Stylist Name " + this._name);
 
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-        Console.WriteLine("TOP" + specialtiesByStylist.Count);
         while(rdr.Read())
         {
           int specialtyId = rdr.GetInt32(0);
@@ -322,14 +317,12 @@ namespace HairSalon.Models
           Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
           specialtiesByStylist.Add(newSpecialty);
         }
-        System.Console.WriteLine("Mid" + specialtiesByStylist.Count);
 
         conn.Close();
         if (conn != null)
         {
             conn.Dispose();
         }
-        Console.WriteLine("end" + specialtiesByStylist.Count);
 
         return specialtiesByStylist;
         }

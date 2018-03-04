@@ -170,9 +170,7 @@ namespace HairSalon.Tests
     newSpecialty.Save();
     int specId = newSpecialty.GetId();
     Console.WriteLine(newSpecialty.GetName() + newSpecialty.GetId());
-    Console.WriteLine("newStylist.GetId " + newStylist.GetId());
     newStylist.AddSpecialty(specId);
-    Console.WriteLine("newStylist.GetId 2 " + newStylist.GetId());
 
 
     //action
@@ -189,15 +187,20 @@ namespace HairSalon.Tests
     Stylist newStylist2 = new Stylist("Berly", 2);
     newStylist2.Save();
     Specialty newSpecialty = new Specialty ("shaving");
+    Specialty newSpecialty2 = new Specialty ("super shaving");
+
     newSpecialty.Save();
+    newSpecialty2.Save();
     newStylist2.AddSpecialty(newSpecialty.GetId());
+    newStylist2.AddSpecialty(newSpecialty2.GetId());
+
 
     //action
     newStylist2.RemoveSpecialty(newSpecialty.GetId());
     List<Specialty> specsList2 = newStylist2.GetSpecialtiesByStylist();
 
     //assert
-    Assert.AreEqual(specsList2.Count, 0);
+    Assert.AreEqual(specsList2.Count, 1);
   }
 
  }
