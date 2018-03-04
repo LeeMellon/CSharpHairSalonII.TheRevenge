@@ -306,17 +306,17 @@ namespace HairSalon.Models
         cmd.Parameters.Add(searchId);
         System.Console.WriteLine("Stylist ID " + this._id);
 
+        MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         List<Specialty> specialtiesByStylist = new List<Specialty>{};
         Console.WriteLine("TOP" + specialtiesByStylist.Count);
-        MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {
           int specialtyId = rdr.GetInt32(0);
           string specialtyName = rdr.GetString(1);
           Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
           specialtiesByStylist.Add(newSpecialty);
-          System.Console.WriteLine("Mid" + specialtiesByStylist.Count);
         }
+        System.Console.WriteLine("Mid" + specialtiesByStylist.Count);
 
         conn.Close();
         if (conn != null)
