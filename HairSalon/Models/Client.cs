@@ -164,6 +164,7 @@ namespace HairSalon.Models
       //RETURNS STYLIST ID FROM JOIN TABLE
       public int GetStylistId()
       {
+        Console.WriteLine("GetStylistId Client Id " + this._id);
         MySqlConnection conn = DB.Connection();
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
@@ -180,15 +181,16 @@ namespace HairSalon.Models
 
         while(rdr.Read())
         {
-          stylistId = rdr.GetInt32(2);
+         stylistId = rdr.GetInt32(0);
         }
 
+        int theId = stylistId;
         conn.Close();
         if (conn != null)
         {
           conn.Dispose();
         }
-        return stylistId;
+        return theId;
       }
 
 
@@ -295,12 +297,13 @@ namespace HairSalon.Models
         }
 
         //EDITS CLIENT DETAILS
-        public void EditClient(string newFirstName, string newLastName, long newNumber, string newEmail)
+        public void EditClient(string newFirstName, string newLastName, long newNumber, string newEmail, int styId)
         {
          MySqlConnection conn = DB.Connection();
          conn.Open();
          var cmd = conn.CreateCommand() as MySqlCommand;
-         cmd.CommandText = @"UPDATE clients SET first_name = @firstname, last_name = @lastname, number = @number, email = @email WHERE id = @searchId;";
+         cmd.CommandText = @"UPDATE clients SET first_name = @firstname, last_name = @lastname, number = @number, email = @email WHERE id = @searchId;
+         UPDATE clients_stylists SET stylist_id = @stylistId";
 
          MySqlParameter searchId = new MySqlParameter();
          searchId.ParameterName = "@searchId";
@@ -326,6 +329,11 @@ namespace HairSalon.Models
          email.ParameterName = "@email";
          email.Value = newEmail;
          cmd.Parameters.Add(email);
+
+         MySqlParameter stylistId = new MySqlParameter();
+         stylistId.ParameterName = "@stylistId";
+         stylistId.Value = styId;
+         cmd.Parameters.Add(stylistId);
 
          cmd.ExecuteNonQuery();
          _nameFirst = newFirstName;
@@ -394,7 +402,7 @@ namespace HairSalon.Models
 
          cmd.ExecuteNonQuery();
 
-        _id = (int) cmd.LastInsertedId;
+        // _id = (int) cmd.LastInsertedId;
 
          conn.Close();
          if (conn != null)
