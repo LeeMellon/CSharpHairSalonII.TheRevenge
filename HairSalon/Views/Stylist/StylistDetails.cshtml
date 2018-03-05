@@ -9,7 +9,7 @@
 <ul>
   @foreach(var specialty in @Model["specialty"])
   {
-    <li>@specialty.GetName()|<a href="/stylist/@Model["stylist"].GetId()/speciality/@specialty.GetId()/delete">Remove this Proficency</a></li>
+    <li>@specialty.GetName()|<a href="/specialty/@specialty.GetId()/stylist/@Model["stylist"].GetId()/delete">Remove this Proficency</a></li>
   }
 </ul>
 }

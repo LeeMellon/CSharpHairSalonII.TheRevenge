@@ -87,13 +87,13 @@ namespace HairSalon.Controllers
         return RedirectToAction("index", "stylist");
       }
 
-      [HttpPost("/stylist/{id}/specialty/{specId}/delete")]
+      [HttpGet("/stylist/{id}/specialty/{specId}/delete")]
       public ActionResult RemoveSpecialty(int id, int specId)
       {
         Stylist thisStylist = Stylist.Find(id);
         int thisId = thisStylist.GetId();
         thisStylist.RemoveSpecialty(specId);
-        return RedirectToAction("StylistDetails", new { id = thisId});
+        return RedirectToAction("StylistDetails", "stylist",  new { id = thisId});
       }
 
 
