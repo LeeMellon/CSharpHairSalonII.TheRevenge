@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}<h1>Specialty Information</h1>
+
+<h4>@Model["specialty"].GetName() is offered by the following Stylists: </h4>
+
+
+
+<ul>
+@foreach(var stylist in @Model["stylists"])
+{
+  <li>@stylist.GetStylistName()</li>
+}
+</ul>
+<h4><a href="/">Return home</a></h4>
