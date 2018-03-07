@@ -7,6 +7,15 @@ namespace HairSalon.Controllers
 {
     public class ClientController : Controller
     {
+
+      //CLIENT CREATOR FORM
+      [HttpGet("/client")]
+      public ActionResult Index()
+      {
+        List<Client> allClients = Client.GetAllClients();
+        return View(allClients);
+      }
+
       //CLIENT CREATOR FORM
       [HttpGet("/client/{id}/new")]
       public ActionResult ClientCreator(int id)
@@ -80,6 +89,16 @@ namespace HairSalon.Controllers
         int thisId = thisClient.GetStylistId();
         thisClient.DeleteClient();
         return RedirectToAction("StylistDetails", "stylist", new {Id = thisId});
+      }
+
+      //DELETS ONE CLIENT FROM CLIENT INDEX PAGE
+      [HttpGet("/client/{id}/delete/client")]
+      public ActionResult DeleteFromClient(int id)
+      {
+        Client thisClient = Client.Find(id);
+        thisClient.DeleteClient();
+        List<Client> allClients = Client.GetAllClients();
+        return RedirectToAction("Index", allClients);
       }
 
     }

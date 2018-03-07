@@ -9,6 +9,14 @@ namespace HairSalon.Controllers
     {
 
 
+    //DISPLAYS ALL SPECIALTY
+      [HttpGet("/specialty")]
+      public ActionResult Index()
+      {
+        List<Specialty> allSpecialties = Specialty.GetAllSpecialties();
+        return View(allSpecialties);
+      }
+
     //DELETS ONE SPECIALTY FROM STYLIST DETAILS PAGE
       [HttpGet("/specialty/{id}/stylist/{styId}/delete")]
       public ActionResult Delete(int id, int styId)
@@ -16,6 +24,24 @@ namespace HairSalon.Controllers
         Stylist thisStylist = Stylist.Find(styId);
         thisStylist.RemoveSpecialty(id);
         return RedirectToAction("StylistDetails", "stylist", new {Id = styId});
+      }
+
+
+    //CREATES SPECIALTY
+      [HttpGet("/specialty/new")]
+      public ActionResult SpecialtyCreator()
+      {
+        return View();
+      }
+
+    //SAVES CREATED SPECIALTY
+      [HttpPost("/specialty/create")]
+      public ActionResult Create()
+      {
+        Specialty newSpecialty = new Specialty (Request.Form["new-specialty"]);
+        newSpecialty.Save();
+        List<Specialty> allSpecialties = Specialty.GetAllSpecialties();
+        return RedirectToAction("Index", allSpecialties);
       }
 
     }

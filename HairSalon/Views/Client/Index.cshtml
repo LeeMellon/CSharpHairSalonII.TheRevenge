@@ -1,0 +1,11 @@
+@{
+  Layout = "_Layout";
+}
+<h1>Hair Salon</h1>
+<h2>Clients</h2>
+@foreach(var client in Model)
+{
+  <h4><a href="/client/@client.GetId()/details">@client.GetFirstName()  @client.GetLastName()</a></h4> <a href="/client/@client.GetId()/update">Edit Client</a> <a href="/client/@client.GetId()/delete/client">Delete Client Record</a>
+}
+<p>Add a new Client on the Stylist page of the Stylist that the Client first sees.</p>
+<h4><a href="/">Return to Home</a></h4>

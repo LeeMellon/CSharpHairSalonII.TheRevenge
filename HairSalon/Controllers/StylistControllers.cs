@@ -8,7 +8,7 @@ namespace HairSalon.Controllers
     public class StylistController : Controller
     {
       //MAIN INDEX PAGE
-      [HttpGet("/")]
+      [HttpGet("/stylist")]
       public ActionResult Index()
       {
         List<Stylist> allStylists = Stylist.GetAllStylists();

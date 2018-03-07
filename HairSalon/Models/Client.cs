@@ -303,7 +303,8 @@ namespace HairSalon.Models
          conn.Open();
          var cmd = conn.CreateCommand() as MySqlCommand;
          cmd.CommandText = @"UPDATE clients SET first_name = @firstname, last_name = @lastname, number = @number, email = @email WHERE id = @searchId;
-         UPDATE clients_stylists SET stylist_id = @stylistId";
+         DELETE FROM clients_stylists WHERE client_id = @searchId;
+         INSERT INTO clients_stylists (client_id, stylist_id) VALUES (@searchId, @stylistId);";
 
          MySqlParameter searchId = new MySqlParameter();
          searchId.ParameterName = "@searchId";

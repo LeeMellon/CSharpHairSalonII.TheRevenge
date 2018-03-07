@@ -180,7 +180,6 @@ namespace HairSalon.Models
          string stylistName = "";
          int stylistChair = 0;
 
-         Console.WriteLine("STYLIST ID" + stylistId);
          while(rdr.Read())
          {
            stylistId = rdr.GetInt32(0);

@@ -11,6 +11,8 @@
     <input type="text" name="email" value='@Model["client"].GetEmail()'>
     <input type="hidden" name="id" value='@Model["client"].GetId()'>
     <select name="stylist_id">
+    <option value="" disabled selected>Select A Stylist</option>
+
     @foreach(var stylist in @Model["stylist"])
     {
       <option value='@stylist.GetId()'>@stylist.GetStylistName()</option>
